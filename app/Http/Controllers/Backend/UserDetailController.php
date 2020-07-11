@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserDetailValidation;
 use Illuminate\Http\Request;
 use App\UserDetail;
 use Illuminate\Support\Facades\Hash;
@@ -15,18 +16,8 @@ class UserDetailController extends Controller
         $this->middleware(['auth:api', 'verified']);
     }
 
-    public function update(Request $request)
+    public function update(UserDetailValidation $request)
     {
-        // return $request->all();
-
-        request()->validate([
-            'name' => 'nullable',
-            'phone' => 'nullable',
-            'email' => 'nullable|email|unique:users,email',
-            'address' => 'nullable',
-            'avatar' => 'nullable|image',
-            'password' => 'required',
-        ]);
 
         if (!Hash::check($request->password, auth()->user()->getAuthPassword())) {
             return response()->json(['errors' => ['password' => "Password do not match our records."]], 403);
@@ -59,7 +50,7 @@ class UserDetailController extends Controller
         ]);
 
         if ($request->name) {
-            auth()->user()->update([
+            request()->user()->update([
                 "name" => $request->name,
             ]);
         }
@@ -74,13 +65,35 @@ class UserDetailController extends Controller
             ]);
         }
         if ($request->email) {
-            auth()->user()->update([
+            request()->user()->update([
                 "email" => $request->email,
                 "email_verified_at" => null,
             ]);
             return  response()->json("logout", 200);
         }
 
+
+        return  response()->json(null, 200);
+    }
+
+
+    public function setting(Request $request)
+    {
+        request()->validate([
+            'old_password' => 'required',
+            'password' => 'required|confirmed|min:8',
+        ]);
+
+        if (!Hash::check($request->old_password, auth()->user()->getAuthPassword())) {
+            return response()->json(['errors' => ['old_password' => "Password do not match our records."]], 403);
+        }
+
+        if ($request->password) {
+            request()->user()->update([
+                'password' => Hash::make($request->password),
+
+            ]);
+        }
 
         return  response()->json(null, 200);
     }

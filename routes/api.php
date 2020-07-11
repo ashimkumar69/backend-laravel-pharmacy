@@ -38,4 +38,5 @@ Route::group([
 ], function () {
 
     Route::post('user/detail', 'UserDetailController@update');
+    Route::post('user/setting', 'UserDetailController@setting');
 });
