@@ -28,4 +28,14 @@ Route::group([
     // auth email verify
     Route::get('/email/resend', 'EmailVerificationController@resend')->name('verification.resend');
     Route::get('/email/verify/{id}/{hash}', 'EmailVerificationController@verify')->name('verification.verify');
+
+    Route::post('logout', 'AuthController@logout');
+});
+
+Route::group([
+    'middleware' => 'api',
+    'namespace' => 'Backend',
+], function () {
+
+    Route::post('user/detail', 'UserDetailController@update');
 });

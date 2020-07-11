@@ -31,7 +31,7 @@ class AuthController extends Controller
             return response()->json(['errors' => ['email' => 'Bad Request']], 400);
         }
 
-        // $user->avator()->create();
+        $user->userdetail()->create();
 
         return response()->json(['success' => 'Registration Successful'], 201);
     }
