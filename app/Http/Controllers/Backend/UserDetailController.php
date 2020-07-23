@@ -30,7 +30,7 @@ class UserDetailController extends Controller
         if (request()->hasFile('avatar')) {
 
 
-            //custom name
+           
             if ($userAvatar && $userAvatar != "avatar.jpg") {
                 Storage::delete('public/avatar/' . $userAvatar);
             }

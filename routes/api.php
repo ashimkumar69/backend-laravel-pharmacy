@@ -39,4 +39,8 @@ Route::group([
     Route::post('user/setting', 'UserDetailController@setting');
 
     Route::apiResource('category', 'CategoryController');
+    Route::apiResource('product', 'ProductController');
+    Route::get('producttrash', 'ProductController@productTrash');
+    Route::post('productrestore', 'ProductController@productRestore');
+    Route::post('productForceDelete', 'ProductController@productForceDelete');
 });

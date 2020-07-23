@@ -72,7 +72,7 @@ class CategoryController extends Controller
             ]);
         }
 
-        return  response()->json(null, 200);
+        return  CategoryResource::collection(Category::all());
     }
 
     /**
@@ -83,7 +83,10 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        if ($category->products()->count() > 0) {
+            return response()->json("haveProduct");
+        }
         $category->delete();
-        return  response()->json(null, 200);
+        return  CategoryResource::collection(Category::all());
     }
 }
