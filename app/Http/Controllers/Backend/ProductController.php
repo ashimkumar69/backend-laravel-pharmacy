@@ -164,9 +164,20 @@ class ProductController extends Controller
 
 
         foreach ($request->selected as $select) {
-            Product::onlyTrashed()
-                ->where('id', $select)
-                ->forceDelete();
+
+
+            $product =  Product::onlyTrashed()
+                ->where('id', $select)->first();
+
+            $picture_path =  $product->picture;
+            $pathinfo = pathinfo($picture_path);
+            $productPicture = $pathinfo['filename'] . '.' . $pathinfo['extension'];
+
+            if ($productPicture && $productPicture != "product.jpg") {
+                Storage::delete('public/product/' . $productPicture);
+            }
+
+            $product->forceDelete();
         }
 
         return  ProductResource::collection(Product::onlyTrashed()->get());
