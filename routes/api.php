@@ -49,4 +49,10 @@ Route::group([
     Route::get('blogTrash', 'BlogController@blogTrash');
     Route::post('blogRestore', 'BlogController@blogRestore');
     Route::post('blogForceDelete', 'BlogController@blogForceDelete');
+
+    Route::apiResource('contact', 'ContactController');
+    Route::get('contactFileDownload/{fileId}', 'ContactController@contactFileDownload');
+    Route::get('contactTrash', 'ContactController@contactTrash');
+    Route::post('contactRestore', 'ContactController@contactRestore');
+    Route::post('contactForceDelete', 'ContactController@contactForceDelete');
 });

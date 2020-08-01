@@ -9,6 +9,10 @@ use App\Http\Resources\Category as CategoryResource;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth:api', 'verified']);
+    }
     /**
      * Display a listing of the resource.
      *
