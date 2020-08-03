@@ -55,4 +55,9 @@ Route::group([
     Route::get('contactTrash', 'ContactController@contactTrash');
     Route::post('contactRestore', 'ContactController@contactRestore');
     Route::post('contactForceDelete', 'ContactController@contactForceDelete');
+
+    Route::apiResource('userfeedback', 'UserFeedbackController');
+    Route::get('allFeedbackIndex', 'UserFeedbackController@allFeedbackIndex');
+    Route::post('approveOrNot', 'UserFeedbackController@approveOrNot');
+    Route::post('delete', 'UserFeedbackController@delete');
 });
