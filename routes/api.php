@@ -60,4 +60,10 @@ Route::group([
     Route::get('allFeedbackIndex', 'UserFeedbackController@allFeedbackIndex');
     Route::post('approveOrNot', 'UserFeedbackController@approveOrNot');
     Route::post('delete', 'UserFeedbackController@delete');
+
+    Route::get('totalDetailsIndex', 'BackendController@index');
+
+    Route::get('userIndex', 'UserController@index');
+    Route::get('getUser/{id}', 'UserController@getUser');
+    Route::post('addRoleToUsers', 'UserController@addRoleToUsers');
 });

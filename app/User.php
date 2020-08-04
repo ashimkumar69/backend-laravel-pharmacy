@@ -6,10 +6,11 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 {
-    use Notifiable;
+    use Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -53,9 +54,22 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     {
         return $this->hasOne(UserDetail::class);
     }
-    
+
     public function userFeedback()
     {
         return $this->hasOne(UserFeedback::class);
+    }
+
+    public function getUserRoleName()
+    {
+        // user role can not be empty
+        $roles = $this->getRoleNames();
+
+        foreach ($roles as $role) {
+            $roleName = $role;
+        }
+        if ($roleName) {
+            return  $roleName;
+        }
     }
 }
