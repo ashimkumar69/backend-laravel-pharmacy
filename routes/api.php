@@ -28,6 +28,9 @@ Route::group([
     // auth email verify
     Route::get('/email/resend', 'EmailVerificationController@resend')->name('verification.resend');
     Route::get('/email/verify/{id}/{hash}', 'EmailVerificationController@verify')->name('verification.verify');
+    // reset password
+    Route::post('password/email', 'ForgotPasswordController@sendResetLinkEmail');
+    Route::post('password/reset', 'ResetPasswordController@reset');
 });
 
 Route::group([

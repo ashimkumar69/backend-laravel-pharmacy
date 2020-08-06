@@ -34,34 +34,39 @@ class FooterController extends Controller
      */
     public function store(FooterValidation $request)
     {
-        // $logo = 'logo.png';
-        // if (request()->hasFile('logo')) {
+        $footer = Footer::all()->count();
+        if (!$footer > 0) {
+            $logo = 'logo.png';
+            if (request()->hasFile('logo')) {
 
-        //     $file = request()->file("logo");
-        //     $picture_make = \Image::make($file)->fit(30, 30, function ($constraint) {
-        //         $constraint->aspectRatio();
-        //     })->encode();
-        //     $givePictureName = time() . "-" .  $file->getClientOriginalName();
-        //     Storage::put($givePictureName, $picture_make);
-        //     Storage::move($givePictureName, 'public/logo/' . $givePictureName);
-        //     $logo = $givePictureName;
-        // }
+                $file = request()->file("logo");
+                $picture_make = \Image::make($file)->fit(30, 30, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->encode();
+                $givePictureName = time() . "-" .  $file->getClientOriginalName();
+                Storage::put($givePictureName, $picture_make);
+                Storage::move($givePictureName, 'public/logo/' . $givePictureName);
+                $logo = $givePictureName;
+            }
 
-        // Footer::create([
+            Footer::create([
 
-        //     'logo' =>  $logo,
-        //     'name' => $request->name,
-        //     'description' => $request->description,
-        //     'f_link' => $request->f_link,
-        //     't_link' => $request->t_link,
-        //     'y_link' => $request->y_link,
-        //     'phone' => $request->phone,
-        //     'houre' => $request->houre,
-        //     'email' => $request->email,
-        //     'address' => $request->address,
-        // ]);
+                'logo' =>  $logo,
+                'name' => $request->name,
+                'description' => $request->description,
+                'f_link' => $request->f_link,
+                't_link' => $request->t_link,
+                'y_link' => $request->y_link,
+                'phone' => $request->phone,
+                'houre' => $request->houre,
+                'email' => $request->email,
+                'address' => $request->address,
+            ]);
 
-        // return new FooterResource(Footer::first());
+            return new FooterResource(Footer::first());
+        } else {
+            return response()->json("haveFooter");
+        }
     }
 
     /**

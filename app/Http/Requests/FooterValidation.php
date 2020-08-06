@@ -24,7 +24,7 @@ class FooterValidation extends FormRequest
     public function rules()
     {
         return [
-            'logo' => 'required|image',
+            'logo' => 'nullable|image',
             'name' => 'required',
             'description' => 'required',
             'f_link' => 'required',
@@ -32,7 +32,7 @@ class FooterValidation extends FormRequest
             'y_link' => 'required',
             'phone' => 'required',
             'houre' => 'required',
-            'email' => 'required',
+            'email' => 'required|email',
             'address' => 'required',
         ];
     }
