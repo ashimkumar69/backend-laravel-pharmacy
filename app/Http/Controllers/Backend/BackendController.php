@@ -15,6 +15,7 @@ class BackendController extends Controller
     public function __construct()
     {
         $this->middleware(['auth:api', 'verified']);
+        $this->middleware('role:Super Admin|Admin');
     }
 
     public function index()

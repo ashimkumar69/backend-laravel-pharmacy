@@ -66,4 +66,8 @@ Route::group([
     Route::get('userIndex', 'UserController@index');
     Route::get('getUser/{id}', 'UserController@getUser');
     Route::post('addRoleToUsers', 'UserController@addRoleToUsers');
+
+    Route::apiResource('banner', 'BannerController');
+
+    Route::apiResource('footer', 'FooterController');
 });

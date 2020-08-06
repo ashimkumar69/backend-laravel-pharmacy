@@ -15,6 +15,7 @@ class ProductController extends Controller
     public function __construct()
     {
         $this->middleware(['auth:api', 'verified']);
+        $this->middleware('role:Super Admin|Admin');
     }
     /**
      * Display a listing of the resource.
@@ -94,8 +95,6 @@ class ProductController extends Controller
         $productPicture = $pathinfo['filename'] . '.' . $pathinfo['extension'];
 
         if ($request->hasFile('picture')) {
-
-
 
             if ($productPicture && $productPicture != "product.jpg") {
                 Storage::delete('public/product/' . $productPicture);

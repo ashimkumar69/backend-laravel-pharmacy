@@ -13,6 +13,8 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware(['auth:api', 'verified']);
+        $this->middleware('role:Super Admin|Admin')->only(['index']);
+        $this->middleware('role:Super Admin')->only(['getUser', 'addRoleToUsers']);
     }
 
     /**
@@ -38,7 +40,7 @@ class UserController extends Controller
     {
 
         // Reset cached roles and permissions
-        // app()[PermissionRegistrar::class]->forgetCachedPermissions();
+        app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         $role = null;
 

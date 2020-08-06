@@ -17,6 +17,7 @@ class ContactController extends Controller
     public function __construct()
     {
         $this->middleware(['auth:api', 'verified'])->except('store');
+        $this->middleware('role:Super Admin|Admin')->except('store');
     }
     /**
      * Display a listing of the resource.

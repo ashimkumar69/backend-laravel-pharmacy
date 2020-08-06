@@ -14,6 +14,8 @@ class UserFeedbackController extends Controller
     public function __construct()
     {
         $this->middleware(['auth:api', 'verified']);
+        $this->middleware('role:User')->only(['index', 'store', 'update', 'destroy']);
+        $this->middleware('role:Super Admin|Admin')->only(['allFeedbackIndex', 'approveOrNot', 'delete']);
     }
     /**
      * Display a listing of the resource.
