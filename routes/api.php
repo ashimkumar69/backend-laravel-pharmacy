@@ -33,6 +33,7 @@ Route::group([
     Route::post('password/reset', 'ResetPasswordController@reset');
 });
 
+// backend
 Route::group([
     'middleware' => 'api',
     'namespace' => 'Backend',
@@ -73,4 +74,17 @@ Route::group([
     Route::apiResource('banner', 'BannerController');
 
     Route::apiResource('footer', 'FooterController');
+});
+
+// fontend
+Route::group([
+    'middleware' => 'api',
+    'namespace' => 'Fontend',
+], function () {
+
+    Route::get('bannerIndex', 'FontendController@bannerIndex');
+    Route::get('footerIndex', 'FontendController@footerIndex');
+    Route::get('productIndex', 'FontendController@productIndex');
+    Route::get('blogIndex', 'FontendController@blogIndex');
+    Route::get('showBlog/{slug}', 'FontendController@showBlog');
 });

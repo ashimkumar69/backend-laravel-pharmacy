@@ -26,4 +26,14 @@ class Blog extends Model
 
         return  $date->format('yy-m-d h:i a ');
     }
+
+    public function scopePublished($query)
+    {
+        return $query->where('published_at', '<=', now());
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }

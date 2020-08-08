@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Backend;
 
 use App\Blog;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\BlogUpdateValidation;
 use App\Http\Requests\BlogValidation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -41,7 +40,7 @@ class BlogController extends Controller
         if (request()->hasFile('picture')) {
 
             $file = request()->file("picture");
-            $picture_make = \Image::make($file)->fit(350, 350, function ($constraint) {
+            $picture_make = \Image::make($file)->fit(768, 350, function ($constraint) {
                 $constraint->aspectRatio();
             })->encode();
             $givePictureName = time() . "-" . request("picture")->getClientOriginalName();
@@ -81,9 +80,9 @@ class BlogController extends Controller
      * @param  \App\Blog  $blog
      * @return \Illuminate\Http\Response
      */
-    public function update(BlogUpdateValidation $request, Blog $blog)
+    public function update(BlogValidation $request, $blogId)
     {
-
+        $blog = Blog::findOrFail($blogId);
         $picture_path =  $blog->picture;
         $pathinfo = pathinfo($picture_path);
         $blogPicture = $pathinfo['filename'] . '.' . $pathinfo['extension'];
@@ -97,10 +96,10 @@ class BlogController extends Controller
             }
 
             $file = request()->file("picture");
-            $picture_make = \Image::make($file)->fit(350, 350, function ($constraint) {
+            $picture_make = \Image::make($file)->fit(768, 350, function ($constraint) {
                 $constraint->aspectRatio();
             })->encode();
-            $givePictureName = time() . "-" . request("picture")->getClientOriginalName();
+            $givePictureName = time() . "-" . $file->getClientOriginalName();
             Storage::put($givePictureName, $picture_make);
             Storage::move($givePictureName, 'public/blog/' . $givePictureName);
             $blogPicture = $givePictureName;
@@ -125,9 +124,9 @@ class BlogController extends Controller
      * @param  \App\Blog  $blog
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Blog $blog)
+    public function destroy($blogId)
     {
-
+        $blog = Blog::findOrFail($blogId);
         $blog->delete();
         return  BlogResource::collection(Blog::all());
     }
