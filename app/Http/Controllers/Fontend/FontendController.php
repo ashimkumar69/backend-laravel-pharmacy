@@ -12,6 +12,8 @@ use App\Product;
 use App\Http\Resources\Product as ProductResource;
 use App\Blog;
 use App\Http\Resources\Blog as BlogResource;
+use App\Category;
+use App\Http\Resources\Category as CategoryResource;
 
 class FontendController extends Controller
 {
@@ -38,5 +40,15 @@ class FontendController extends Controller
     public function showBlog($slug, Blog $blog)
     {
         return new BlogResource($blog->whereSlug($slug)->first());
+    }
+
+    public function allProductIndex()
+    {
+        return  ProductResource::collection(Product::paginate(16));
+    }
+
+    public function categoryIndex()
+    {
+        return  CategoryResource::collection(Category::all());
     }
 }
