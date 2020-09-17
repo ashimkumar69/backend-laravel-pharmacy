@@ -78,4 +78,9 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     {
         $this->notify(new ResetPasswordNotification($token));
     }
+
+    // public function notifySuperAdminAndAdmin(User $user)
+    // {
+    //     # code...
+    // }
 }

@@ -7,6 +7,9 @@ use App\Http\Requests\UserFeedbackValidation;
 use App\UserFeedback;
 use Illuminate\Http\Request;
 use App\Http\Resources\UserFeedback as UserFeedbackResource;
+use App\Notifications\FeedBackNotification;
+use App\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class UserFeedbackController extends Controller
@@ -40,11 +43,27 @@ class UserFeedbackController extends Controller
     {
         $count =  UserFeedback::where('user_id', Auth::id())->count();
         if ($count === 0) {
-            UserFeedback::create([
+            $userFeedback = UserFeedback::create([
                 'user_id' => Auth::id(),
                 'stars' => $request->stars,
                 'comment' => $request->comment,
             ]);
+
+            $userFeedbackData  = [
+
+                'name' => Auth()->user()->name,
+                'subject' => 'User Feedback',
+                'created_at' => Carbon::now()->format('yy-m-d h:i a '),
+
+            ];
+
+            $superAdminAndAdmin = User::role(['Super Admin', 'Admin'])->get();
+
+            foreach ($superAdminAndAdmin as $user) {
+
+                $user->notify(new FeedBackNotification($userFeedbackData));
+            }
+
             $data = UserFeedbackResource::collection(UserFeedback::where('user_id', Auth::id())->get());
             if ($data) {
                 return $data;

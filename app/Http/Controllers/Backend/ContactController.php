@@ -8,6 +8,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ContactValidation;
 use Illuminate\Http\Request;
 use App\Http\Resources\Contact as ContactResource;
+use App\Notifications\ContactsNotification;
+use App\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 
 use function GuzzleHttp\Promise\all;
@@ -69,6 +72,22 @@ class ContactController extends Controller
                 ]);
             }
         }
+
+        $contactData  = [
+
+            'name' => $contact->name,
+            'subject' => 'Contact',
+            'created_at' => Carbon::now()->format('yy-m-d h:i a '),
+
+        ];
+
+        $superAdminAndAdmin = User::role(['Super Admin', 'Admin'])->get();
+
+        foreach ($superAdminAndAdmin as $user) {
+
+            $user->notify(new ContactsNotification($contactData));
+        }
+
 
         return  ContactResource::collection(Contact::all());
     }

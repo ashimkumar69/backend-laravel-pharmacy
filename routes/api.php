@@ -74,6 +74,9 @@ Route::group([
     Route::apiResource('banner', 'BannerController');
 
     Route::apiResource('footer', 'FooterController');
+
+    Route::apiResource('notification', 'NotificationController');
+    Route::post('notificationDelete', 'NotificationController@notificationDelete');
 });
 
 // fontend

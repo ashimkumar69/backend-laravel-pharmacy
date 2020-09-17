@@ -14,11 +14,16 @@ use App\Blog;
 use App\Http\Resources\Blog as BlogResource;
 use App\Category;
 use App\Http\Resources\Category as CategoryResource;
+use Spatie\Permission\Models\Role;
 
 class FontendController extends Controller
 {
     public function bannerIndex()
     {
+        // Role::create(['name' => 'Super Admin']);
+        // Role::create(['name' => 'Admin']);
+        // Role::create(['name' => 'User']);
+
         return  BannerResource::collection(Banner::all());
     }
 

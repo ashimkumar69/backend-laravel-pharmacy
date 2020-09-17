@@ -24,6 +24,7 @@ class User extends JsonResource
             'email_verified_at' => $this->email_verified_at ? $this->email_verified_at : false,
             'created_at' => $this->created_at->format('d-m-y h:i a'),
             'role' => $this->getUserRoleName(),
+            'notificationCount' => auth()->user()->unreadNotifications->count(),
             // 'updated_at' => $this->updated_at,
         ];
     }
