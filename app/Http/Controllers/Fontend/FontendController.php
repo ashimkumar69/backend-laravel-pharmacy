@@ -14,6 +14,9 @@ use App\Blog;
 use App\Http\Resources\Blog as BlogResource;
 use App\Category;
 use App\Http\Resources\Category as CategoryResource;
+use App\UserFeedback;
+use App\Http\Resources\UserFeedback as UserFeedbackResource;;
+
 use Spatie\Permission\Models\Role;
 
 class FontendController extends Controller
@@ -55,5 +58,10 @@ class FontendController extends Controller
     public function categoryIndex()
     {
         return  CategoryResource::collection(Category::all());
+    }
+
+    public function userFeedbackIndex()
+    {
+        return  UserFeedbackResource::collection(UserFeedback::published()->get());
     }
 }

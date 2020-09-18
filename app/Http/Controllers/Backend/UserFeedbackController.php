@@ -43,7 +43,7 @@ class UserFeedbackController extends Controller
     {
         $count =  UserFeedback::where('user_id', Auth::id())->count();
         if ($count === 0) {
-            $userFeedback = UserFeedback::create([
+            UserFeedback::create([
                 'user_id' => Auth::id(),
                 'stars' => $request->stars,
                 'comment' => $request->comment,
@@ -99,6 +99,7 @@ class UserFeedbackController extends Controller
         $userFeedback->update([
             'stars' => $request->stars,
             'comment' => $request->comment,
+            'published' => false,
         ]);
 
         $data = UserFeedbackResource::collection(UserFeedback::where('user_id', Auth::id())->get());
@@ -123,7 +124,7 @@ class UserFeedbackController extends Controller
     public function allFeedbackIndex()
     {
 
-        return UserFeedbackResource::collection(UserFeedback::all());
+        return UserFeedbackResource::collection(UserFeedback::orderBy('id', 'DESC')->get());
     }
 
     public function approveOrNot(Request $request)
@@ -141,7 +142,7 @@ class UserFeedbackController extends Controller
         }
 
 
-        return UserFeedbackResource::collection(UserFeedback::all());
+        return UserFeedbackResource::collection(UserFeedback::orderBy('id', 'DESC')->get());
     }
 
     public function delete(Request $request)

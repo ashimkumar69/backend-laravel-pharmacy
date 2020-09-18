@@ -21,6 +21,7 @@ class UserFeedback extends JsonResource
             'stars' => $this->stars,
             'comment' => $this->comment,
             'published' => $this->published === 1 ? true : false,
+            'created_at' => $this->created_at->format('d-m-y h:i a'),
 
         ];
     }

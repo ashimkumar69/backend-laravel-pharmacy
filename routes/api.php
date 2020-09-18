@@ -92,4 +92,5 @@ Route::group([
     Route::get('showBlog/{slug}', 'FontendController@showBlog');
     Route::get('allProductIndex', 'FontendController@allProductIndex');
     Route::get('categoryIndex', 'FontendController@categoryIndex');
+    Route::get('userFeedbackIndex', 'FontendController@userFeedbackIndex');
 });

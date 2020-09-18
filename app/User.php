@@ -9,6 +9,8 @@ use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Spatie\Permission\Traits\HasRoles;
 
+
+
 class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 {
     use Notifiable, HasRoles;
@@ -78,9 +80,4 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     {
         $this->notify(new ResetPasswordNotification($token));
     }
-
-    // public function notifySuperAdminAndAdmin(User $user)
-    // {
-    //     # code...
-    // }
 }
