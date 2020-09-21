@@ -29,7 +29,7 @@ class ContactController extends Controller
      */
     public function index()
     {
-        return  ContactResource::collection(Contact::all());
+        return  ContactResource::collection(Contact::orderBy('id', 'DESC')->get());
     }
 
     /**
@@ -89,7 +89,7 @@ class ContactController extends Controller
         }
 
 
-        return  ContactResource::collection(Contact::all());
+        return  ContactResource::collection(Contact::orderBy('id', 'DESC')->get());
     }
 
     /**
@@ -124,7 +124,7 @@ class ContactController extends Controller
     public function destroy(Contact $contact)
     {
         $contact->delete();
-        return  ContactResource::collection(Contact::all());
+        return  ContactResource::collection(Contact::orderBy('id', 'DESC')->get());
     }
 
     function contactFileDownload($fileId)

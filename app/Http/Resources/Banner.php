@@ -17,6 +17,7 @@ class Banner extends JsonResource
         return [
             'id' => $this->id,
             'picture' => $this->picture,
+            'created_at' => $this->created_at->format('d-m-y h:i a'),
         ];
     }
 }

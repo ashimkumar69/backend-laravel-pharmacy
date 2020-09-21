@@ -42,7 +42,7 @@ class FontendController extends Controller
 
     public function blogIndex()
     {
-        return  BlogResource::collection(Blog::published()->paginate(4));
+        return  BlogResource::collection(Blog::published()->orderBy('id', 'DESC')->paginate(4));
     }
 
     public function showBlog($slug, Blog $blog)

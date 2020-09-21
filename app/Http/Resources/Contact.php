@@ -24,6 +24,7 @@ class Contact extends JsonResource
             'subject' => $this->subject,
             'comment' => $this->comment,
             'file' => new ContactFileResource(ContactFile::where('contact_id', $this->id)->first()),
+            'created_at' => $this->created_at->format('d-m-y h:i a'),
         ];
     }
 }

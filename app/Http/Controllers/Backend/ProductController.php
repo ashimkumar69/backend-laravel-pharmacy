@@ -24,7 +24,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return  ProductResource::collection(Product::all());
+        return  ProductResource::collection(Product::orderBy('id', 'DESC')->get());
     }
 
     /**
@@ -65,7 +65,7 @@ class ProductController extends Controller
 
 
 
-        return  ProductResource::collection(Product::all());
+        return  ProductResource::collection(Product::orderBy('id', 'DESC')->get());
     }
 
     /**
@@ -130,7 +130,7 @@ class ProductController extends Controller
             'mrp' => $request->mrp,
         ]);
 
-        return  ProductResource::collection(Product::all());
+        return  ProductResource::collection(Product::orderBy('id', 'DESC')->get());
     }
 
     /**
@@ -142,7 +142,7 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
-        return  ProductResource::collection(Product::all());
+        return  ProductResource::collection(Product::orderBy('id', 'DESC')->get());
     }
 
     public function productTrash()

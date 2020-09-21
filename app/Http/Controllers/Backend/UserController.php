@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Resources\User as UserResource;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
 class UserController extends Controller
 {
@@ -24,8 +27,12 @@ class UserController extends Controller
      */
     public function index()
     {
-
-        return UserResource::collection(User::all());
+        if (auth()->user()->getUserRoleName() == "Super Admin") {
+            return UserResource::collection(User::where('id', "!=", auth()->user()->id)->orderBy('id', 'DESC')->get());
+        } elseif (auth()->user()->getUserRoleName() == "Admin") {
+            $users = User::role('Super Admin')->first();
+            return UserResource::collection(User::where('id', "!=", $users->id)->where('id', "!=", auth()->user()->id)->orderBy('id', 'DESC')->get());
+        }
     }
 
     public function getUser(Request $request)
@@ -44,22 +51,23 @@ class UserController extends Controller
 
         $role = null;
 
-        if ((int)$request->role === 1) {
-            $role = 'Super Admin';
-        }
+        // if ($request->role === 1) {
+        //     $role = 'Super Admin';
+        // }
 
-        if ((int)$request->role === 2) {
+        if ($request->role === 2) {
             $role = 'Admin';
         }
 
-        if ((int)$request->role === 3) {
+        if ($request->role === 3) {
             $role = 'User';
         }
 
 
-        $user = User::findOrFail((int)$request->id);
+        $user = User::findOrFail($request->id);
         $user->syncRoles($role);
-        $user = User::whereId((int)$request->id)->get();
+        $user = User::whereId($request->id)->get();
+
         return UserResource::collection($user);
     }
 }

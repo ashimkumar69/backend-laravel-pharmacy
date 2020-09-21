@@ -22,7 +22,7 @@ class BannerController extends Controller
      */
     public function index()
     {
-        return  BannerResource::collection(Banner::all());
+        return  BannerResource::collection(Banner::orderBy('id', 'DESC')->get());
     }
 
     /**
@@ -56,7 +56,7 @@ class BannerController extends Controller
             }
         }
 
-        return  BannerResource::collection(Banner::all());
+        return  BannerResource::collection(Banner::orderBy('id', 'DESC')->get());
     }
 
     /**
@@ -108,7 +108,8 @@ class BannerController extends Controller
         $banner->update([
             'picture' =>  $bannerPicture,
         ]);
-        return  BannerResource::collection(Banner::all());
+
+        return  BannerResource::collection(Banner::orderBy('id', 'DESC')->get());
     }
 
     /**
@@ -131,6 +132,6 @@ class BannerController extends Controller
 
         $banner->forceDelete();
 
-        return  BannerResource::collection(Banner::all());
+        return  BannerResource::collection(Banner::orderBy('id', 'DESC')->get());
     }
 }

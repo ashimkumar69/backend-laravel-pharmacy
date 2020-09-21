@@ -24,7 +24,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-        return  BlogResource::collection(Blog::all());
+        return  BlogResource::collection(Blog::orderBy('id', 'DESC')->get());
     }
 
     /**
@@ -54,12 +54,12 @@ class BlogController extends Controller
         Blog::create([
             'picture' =>  $blogPicture,
             'title' =>  $request->title,
-            'slug' => Str::slug($request->title),
+            'slug' => Str::slug($request->title . "-" . time()),
             'body' => $request->body,
             'published_at' => $published_at,
         ]);
 
-        return  BlogResource::collection(Blog::all());
+        return  BlogResource::collection(Blog::orderBy('id', 'DESC')->get());
     }
 
     /**
@@ -110,12 +110,12 @@ class BlogController extends Controller
         $blog->update([
             'picture' =>  $blogPicture,
             'title' =>  $request->title,
-            'slug' => Str::slug($request->title),
+            'slug' => Str::slug($request->title . "-" . time()),
             'body' => $request->body,
             'published_at' => $published_at,
         ]);
 
-        return  BlogResource::collection(Blog::all());
+        return  BlogResource::collection(Blog::orderBy('id', 'DESC')->get());
     }
 
     /**
@@ -128,7 +128,7 @@ class BlogController extends Controller
     {
         $blog = Blog::findOrFail($blogId);
         $blog->delete();
-        return  BlogResource::collection(Blog::all());
+        return  BlogResource::collection(Blog::orderBy('id', 'DESC')->get());
     }
 
     public function blogTrash()
