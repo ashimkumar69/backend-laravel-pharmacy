@@ -32,7 +32,11 @@ class AuthController extends Controller
         }
 
         $user->userdetail()->create();
+
+        // $user->assignRole('Super Admin');
+
         $user->assignRole('User');
+
         return response()->json(['success' => 'Registration Successful'], 201);
     }
 
