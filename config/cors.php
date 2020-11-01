@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['http://localhost:8010'],
+    'allowed_origins' => [env('FONTEND_URL')],
 
     'allowed_origins_patterns' => [],
 
