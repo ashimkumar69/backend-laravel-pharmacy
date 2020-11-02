@@ -8,9 +8,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ContactsNotification extends Notification implements ShouldQueue
+class ContactsNotification extends Notification
 {
-    use Queueable;
+    
 
     public $contact;
     /**

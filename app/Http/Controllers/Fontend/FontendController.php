@@ -23,9 +23,6 @@ class FontendController extends Controller
 {
     public function bannerIndex()
     {
-        // Role::create(['name' => 'Super Admin']);
-        // Role::create(['name' => 'Admin']);
-        // Role::create(['name' => 'User']);
 
         return  BannerResource::collection(Banner::all());
     }

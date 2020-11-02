@@ -7,9 +7,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class FeedBackNotification extends Notification implements ShouldQueue
+class FeedBackNotification extends Notification
 {
-    use Queueable;
+    
     public $feedback;
     /**
      * Create a new notification instance.
